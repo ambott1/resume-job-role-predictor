@@ -782,7 +782,7 @@ candidate_id,skills,qualification,experience_level,job_role
 781,"HTML, CSS, JavaScript, Vue.js",Bachelor's in Information Technology,Mid,Web Developer
 782,"Python, TensorFlow, NLP, Deep Learning",PhD in Artificial Intelligence,Senior,AIML
 783,"Java, Kotlin, Android SDK, REST APIs",Bachelor's in Software Engineering,Mid,Mobile Developer
-784,"Python, Flask, JavaScript, SQL",Bachelor's in Computer Science,"Entry,",Full Stack Python Developer
+784,"Python, Flask, JavaScript, SQL",Bachelor's in Computer Science,Entry,Full Stack Python Developer
 785,"Java, Spring, React, AWS",Master's in Software Engineering,Senior,Full Stack Java Developer
 786,"Adobe XD, Figma, UI/UX, Prototyping",Bachelor's in Graphic Design,Mid,Designer
 787,"SQL, R, Data Visualization, Statistics",Bachelor's in Statistics,Entry,Data Analyst
