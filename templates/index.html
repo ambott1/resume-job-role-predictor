@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Job Role Prediction System</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Choices.js for multi-select (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Custom Choices.js styling */
+        .choices__inner {
+            background-color: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            min-height: 2.5rem;
+            padding: 0.375rem 0.75rem;
+        }
+        
+        .choices__list--multiple .choices__item {
+            background-color: #667eea;
+            border: 1px solid #667eea;
+            border-radius: 0.375rem;
+            padding: 0.25rem 0.5rem;
+            margin: 0.125rem;
+        }
+        
+        .choices__list--dropdown {
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+        }
+        
+        .choices[data-type*=select-multiple] .choices__button {
+            border-left: 1px solid #fff;
+            padding: 0 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div x-data="predictionApp()" x-init="initChoices()">
+        <!-- Header -->
+        <div class="gradient-bg text-white py-8 shadow-lg">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl font-bold text-center mb-2">🚀 Tech Job Role Prediction System</h1>
+                <p class="text-center text-lg opacity-90">Discover your ideal tech career path powered by AI</p>
+            </div>
+        </div>
+        
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Form Section -->
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover transition-all duration-300">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        Candidate Information
+                    </h2>
+                    
+                    <form @submit.prevent="submitForm" class="space-y-5">
+                        <!-- Name Field -->
+                        <div>
+                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Full Name <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                x-model="formData.name"
+                                required
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                placeholder="Enter your full name"
+                            >
+                        </div>
+                        
+                        <!-- Skills Multi-Select -->
+                        <div>
+                            <label for="skills" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Technical Skills <span class="text-red-500">*</span>
+                            </label>
+                            <select 
+                                id="skills" 
+                                multiple
+                                required
+                                class="w-full"
+                            >
+                                <option value="">Select your skills...</option>
+                                {% for skill in skills %}
+                                <option value="{{ skill }}">{{ skill }}</option>
+                                {% endfor %}
+                            </select>
+                            <p class="text-xs text-gray-500 mt-1">Select all skills that apply to you</p>
+                        </div>
+                        
+                        <!-- Qualification Dropdown -->
+                        <div>
+                            <label for="degree_level" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Highest Qualification <span class="text-red-500">*</span>
+                            </label>
+                            <select 
+                                id="degree_level" 
+                                x-model="formData.degree_level"
+                                required
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                            >
+                                <option value="">Select qualification level...</option>
+                                <option value="High School">High School</option>
+                                <option value="Bachelor's">Bachelor's Degree</option>
+                                <option value="Master's">Master's Degree</option>
+                                <option value="PhD">PhD / Doctorate</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Field of Study -->
+                        <div>
+                            <label for="field_of_study" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Field of Study <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="field_of_study" 
+                                x-model="formData.field_of_study"
+                                required
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                placeholder="e.g., Computer Science, Data Science"
+                            >
+                        </div>
+                        
+                        <!-- Experience Level -->
+                        <div>
+                            <label for="experience_level" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Experience Level <span class="text-red-500">*</span>
+                            </label>
+                            <select 
+                                id="experience_level" 
+                                x-model="formData.experience_level"
+                                required
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                            >
+                                <option value="">Select experience level...</option>
+                                <option value="Entry">Entry (0-2 years)</option>
+                                <option value="Mid">Mid (3-5 years)</option>
+                                <option value="Senior">Senior (6+ years)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <button 
+                            type="submit"
+                            :disabled="loading"
+                            class="w-full gradient-bg text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition-all duration-300 flex items-center justify-center shadow-lg"
+                            :class="{'opacity-50 cursor-not-allowed': loading}"
+                        >
+                            <svg x-show="loading" class="animate-spin h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span x-text="loading ? 'Predicting...' : 'Predict Job Role'"></span>
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Results Section -->
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover transition-all duration-300">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        Prediction Results
+                    </h2>
+                    
+                    <!-- Initial State -->
+                    <div x-show="!result && !error" class="text-center py-12">
+                        <svg class="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                        <p class="text-gray-500 text-lg">Fill out the form to get your prediction</p>
+                        <p class="text-gray-400 text-sm mt-2">Our AI will analyze your profile and suggest the best tech role for you</p>
+                    </div>
+                    
+                    <!-- Error State -->
+                    <div x-show="error" class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-red-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                            </svg>
+                            <div>
+                                <p class="font-semibold text-red-800">Error</p>
+                                <p class="text-red-700 text-sm" x-text="error"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Success State -->
+                    <div x-show="result" x-transition class="space-y-6">
+                        <!-- Candidate Name -->
+                        <div class="text-center pb-4 border-b">
+                            <p class="text-sm text-gray-500">Prediction for</p>
+                            <p class="text-xl font-bold text-gray-800" x-text="result?.candidate_name"></p>
+                        </div>
+                        
+                        <!-- Predicted Role -->
+                        <div class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-6 border border-purple-200">
+                            <p class="text-sm font-semibold text-gray-600 mb-2">🎯 Predicted Tech Role</p>
+                            <p class="text-2xl font-bold text-purple-700 mb-3" x-text="result?.predicted_role"></p>
+                            <div class="flex items-center">
+                                <div class="flex-1 bg-gray-200 rounded-full h-3">
+                                    <div 
+                                        class="gradient-bg h-3 rounded-full transition-all duration-500"
+                                        :style="`width: ${(result?.suitability_score * 100).toFixed(0)}%`"
+                                    ></div>
+                                </div>
+                                <span class="ml-3 text-sm font-bold text-purple-700" x-text="`${(result?.suitability_score * 100).toFixed(1)}%`"></span>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-2">Suitability Score</p>
+                        </div>
+                        
+                        <!-- Top 3 Predictions -->
+                        <div>
+                            <p class="text-sm font-semibold text-gray-700 mb-3">📊 Top 3 Matching Roles</p>
+                            <div class="space-y-3">
+                                <template x-for="(pred, index) in result?.top_3_predictions" :key="index">
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                        <div class="flex items-center flex-1">
+                                            <span 
+                                                class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3"
+                                                :class="{
+                                                    'bg-purple-600 text-white': index === 0,
+                                                    'bg-purple-400 text-white': index === 1,
+                                                    'bg-purple-200 text-purple-700': index === 2
+                                                }"
+                                                x-text="index + 1"
+                                            ></span>
+                                            <span class="font-medium text-gray-800" x-text="pred.role"></span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
+                                                <div 
+                                                    class="h-2 rounded-full transition-all duration-500"
+                                                    :class="{
+                                                        'bg-purple-600': index === 0,
+                                                        'bg-purple-400': index === 1,
+                                                        'bg-purple-300': index === 2
+                                                    }"
+                                                    :style="`width: ${(pred.probability * 100).toFixed(0)}%`"
+                                                ></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-gray-700 w-12 text-right" x-text="`${(pred.probability * 100).toFixed(1)}%`"></span>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        
+                        <!-- Info Note -->
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <p class="text-xs text-blue-800">
+                                <span class="font-semibold">💡 Note:</span> These predictions are based on advanced machine learning algorithms analyzing your skills, education, and experience. The suitability score indicates how well your profile matches the predicted role.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Info Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover transition-all duration-300">
+                    <div class="text-purple-600 mb-3">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800 mb-2">AI-Powered Analysis</h3>
+                    <p class="text-gray-600 text-sm">Advanced machine learning models trained on thousands of tech job profiles to provide accurate predictions.</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover transition-all duration-300">
+                    <div class="text-purple-600 mb-3">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800 mb-2">Instant Results</h3>
+                    <p class="text-gray-600 text-sm">Get your tech role prediction in seconds with detailed probability scores for multiple career paths.</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover transition-all duration-300">
+                    <div class="text-purple-600 mb-3">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800 mb-2">Data-Driven Insights</h3>
+                    <p class="text-gray-600 text-sm">Leverages semantic embeddings and skill analysis to match you with the perfect tech role.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-6 mt-12">
+            <div class="container mx-auto px-4 text-center">
+                <p class="text-sm">ECS171 Machine Learning Project - Team 5</p>
+                <p class="text-xs text-gray-400 mt-1">UC Davis - Fall Quarter 2025</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        function predictionApp() {
+            return {
+                formData: {
+                    name: '',
+                    degree_level: '',
+                    field_of_study: '',
+                    experience_level: ''
+                },
+                loading: false,
+                result: null,
+                error: null,
+                skillsChoice: null,
+                
+                initChoices() {
+                    // Initialize Choices.js for multi-select
+                    const skillsElement = document.getElementById('skills');
+                    this.skillsChoice = new Choices(skillsElement, {
+                        removeItemButton: true,
+                        searchEnabled: true,
+                        searchChoices: true,
+                        placeholder: true,
+                        placeholderValue: 'Search and select your skills...',
+                        noResultsText: 'No skills found',
+                        itemSelectText: 'Click to select',
+                        maxItemCount: 20,
+                        searchResultLimit: 50
+                    });
+                },
+                
+                async submitForm() {
+                    this.loading = true;
+                    this.error = null;
+                    this.result = null;
+                    
+                    try {
+                        // Get selected skills from Choices.js
+                        const selectedSkills = this.skillsChoice.getValue(true);
+                        
+                        if (selectedSkills.length === 0) {
+                            throw new Error('Please select at least one skill');
+                        }
+                        
+                        const payload = {
+                            name: this.formData.name,
+                            skills: selectedSkills,
+                            degree_level: this.formData.degree_level,
+                            field_of_study: this.formData.field_of_study,
+                            experience_level: this.formData.experience_level
+                        };
+                        
+                        const response = await fetch('/predict', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        });
+                        
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            throw new Error(errorData.error || 'Prediction failed');
+                        }
+                        
+                        const data = await response.json();
+                        this.result = data;
+                        
+                        // Scroll to results
+                        document.querySelector('.bg-white.rounded-lg.shadow-lg.p-6').scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'nearest' 
+                        });
+                        
+                    } catch (err) {
+                        this.error = err.message;
+                        console.error('Prediction error:', err);
+                    } finally {
+                        this.loading = false;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
