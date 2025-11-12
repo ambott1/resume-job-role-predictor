@@ -101,7 +101,7 @@ ECS171ResumeAnalysis/
 The easiest way to use the system is through the web interface:
 
 ```bash
-python app.py
+python3 app.py
 ```
 
 Then open your browser and navigate to: **http://localhost:5000**
