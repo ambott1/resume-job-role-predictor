@@ -34,8 +34,33 @@ ECS171ResumeAnalysis/
 ├── datasets/                           # Data files
 │   └── candidate_job_role_dataset.csv
 │
+├── imgs/                               # Visualization outputs
+│   ├── datasets/
+│   │   └── candidate_job_role/        # Data exploration plots
+│   │       ├── job_role_distribution.png
+│   │       ├── experience_level_distribution.png
+│   │       ├── qualifications_distribution.png
+│   │       └── skills_analysis.png
+│   │
+│   └── model/
+│       └── performance/                # Model performance plots
+│           ├── confusion_matrix.png
+│           ├── actual_vs_predicted.png
+│           ├── per_class_metrics.png
+│           ├── feature_importance.png
+│           ├── overall_metrics.png
+│           ├── precision_recall_curve.png
+│           ├── prediction_probability_distribution.png
+│           └── actual_vs_predicted_scatter.png
+│
 ├── notebooks/                          # Jupyter notebooks
 │   └── 1-data-exploration.ipynb
+│
+├── project_report/                     # Project documentation
+│   ├── main.tex                        # LaTeX project report source
+│   ├── _ECS_171__Project_Report___Team_5.pdf  # Compiled project report
+│   ├── ECS_171_Project_Guidelines.pdf
+│   └── example_project_report_elsroujiluis_147715_7213196_FACES Emotional Classifier.pdf
 │
 ├── src/                                # Source code
 │   ├── components/
@@ -133,11 +158,17 @@ jupyter notebook notebooks/1-data-exploration.ipynb
 
 This notebook includes:
 - Data profiling and quality checks
-- Distribution visualizations
+- Distribution visualizations (saved to `imgs/datasets/candidate_job_role/`)
 - Skills analysis and word clouds
 - Class imbalance analysis
 - Feature engineering prototypes
 - Baseline model testing
+
+**Generated Visualizations:**
+- Job Role Distribution
+- Experience Level Distribution
+- Qualifications Distribution
+- Skills Analysis (word clouds, top skills)
 
 ### 3. Training the Model
 
@@ -156,7 +187,8 @@ python3 train_pipeline.py
    - Skills: Averaged Word2Vec embeddings (300-dim)
 3. **Model Training**: XGBoost with RandomizedSearchCV (50 iterations, 3-fold CV)
 4. **Evaluation**: Classification report on test set
-5. **Artifact Saving**: All models and encoders saved to `artifacts/`
+5. **Visualization**: Generates performance plots (confusion matrix, metrics, feature importance)
+6. **Artifact Saving**: All models and encoders saved to `artifacts/`
 
 **Expected output:**
 ```
@@ -284,6 +316,45 @@ The system is evaluated using:
 
 Expected performance: **85-90% accuracy** on test set
 
+### Performance Visualizations
+
+After training, the following visualizations are automatically generated and saved to `imgs/model/performance/`:
+
+1. **Confusion Matrix** (`confusion_matrix.png`)
+   - Shows actual vs predicted job roles for all classes
+   - Helps identify which roles are frequently confused
+
+2. **Actual vs Predicted Comparison** (`actual_vs_predicted.png`)
+   - Overview of prediction accuracy
+   - Distribution comparison between actual and predicted job roles
+
+3. **Per-Class Performance Metrics** (`per_class_metrics.png`)
+   - Precision, Recall, and F1-Score for each job role
+   - Identifies which roles the model predicts best/worst
+
+4. **Feature Importance** (`feature_importance.png`)
+   - Top 20 most important features from XGBoost
+   - Shows which features contribute most to predictions
+
+5. **Overall Metrics Summary** (`overall_metrics.png`)
+   - Bar chart of overall accuracy and F1 scores
+   - Quick visual summary of model performance
+
+6. **Precision-Recall Curve** (`precision_recall_curve.png`)
+   - Multi-class precision-recall curves
+   - Shows micro-averaged and per-class PR curves with average precision scores
+   - Useful for understanding model performance across different thresholds
+
+7. **Prediction Probability Distribution** (`prediction_probability_distribution.png`)
+   - Distribution of maximum prediction probabilities
+   - Confidence vs accuracy analysis
+   - Helps assess model calibration and prediction certainty
+
+8. **Actual vs Predicted Scatter Plot** (`actual_vs_predicted_scatter.png`)
+   - Scatter plot showing actual vs predicted job roles
+   - Color-coded by prediction correctness
+   - Visual representation of prediction patterns and errors
+
 ## 🔧 Saved Artifacts
 
 All artifacts are saved in `artifacts/` directory:
@@ -328,13 +399,17 @@ The Flask web application (`app.py`) provides:
 - **Interactivity:** Alpine.js (CDN)
 - **Multi-select:** Choices.js (CDN)
 
-## 🔮 Future Enhancements
+## 📄 Project Report
 
-- [x] Create web interface for predictions
-- [ ] Add model versioning and tracking
-- [ ] Deploy to cloud platform
-- [ ] Add user authentication
-- [ ] Store prediction history
+The `project_report/` directory contains:
+- **main.tex**: LaTeX source code for the project report
+- **_ECS_171__Project_Report___Team_5.pdf**: Compiled project report (PDF)
+- **ECS_171_Project_Guidelines.pdf**: Official project guidelines and requirements
+- **example_project_report_elsroujiluis_147715_7213196_FACES Emotional Classifier.pdf**: Example project report for reference
+
+The `main.tex` file contains the complete LaTeX source code for the project report, including all sections, figures, tables, and bibliography. The compiled PDF report (`_ECS_171__Project_Report___Team_5.pdf`) is the final formatted version ready for submission.
+
+The guidelines and example report provide guidance on project structure, reporting requirements, and formatting standards for the ECS171 course.
 
 ## 📝 License
 
@@ -350,4 +425,3 @@ Team 5 - ECS171 Fall Quarter 2025
 - Libraries: scikit-learn, XGBoost, gensim, pandas, Flask
 - Frontend: Tailwind CSS, Alpine.js, Choices.js
 - Course: ECS171 - Machine Learning, UC Davis
-
