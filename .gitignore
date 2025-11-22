@@ -58,3 +58,6 @@ gensim-data/
 
 # Sentence Transformers cache
 .cache/
+
+# Generated images and visualizations
+imgs/
