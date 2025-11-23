@@ -362,6 +362,8 @@ The cross-validation F1 score of 0.9941, with a minimal standard deviation of 0.
 
 The fact that the cross-validation F1 score (0.9941) is slightly higher than the test F1 score (0.9933) is expected and indicates consistent performance. The small difference (0.0008) is well within the margin of statistical variation and does not suggest overfitting. If the model were overfitting, we would expect a larger gap between cross-validation and test performance.
 
+We also tested our model on a reduced set of features, removing the 35 most correlated features from our original data, and obtained similar results, with a weighted and macro test F1 score of 0.9867, which is to be expected given XGBoost's resilience against multicollinearity.
+
 \subsubsection{Confusion Matrix Analysis}
 
 \begin{figure}[htbp]
