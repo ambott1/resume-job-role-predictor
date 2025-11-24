@@ -381,8 +381,6 @@ Class balance is maintained in the test set, with most classes showing 7-8 corre
 
 The absence of off-diagonal patterns suggests that the model has learned distinct representations for each job role. If the model were confusing multiple pairs of classes, we would expect clusters of non-zero off-diagonal cells, but the single misclassification is isolated. This indicates that the feature engineering successfully captures role-specific characteristics, and the XGBoost model effectively learns decision boundaries.
 
-\subsubsection{Actual vs Predicted Visualization}
-
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\columnwidth]{./imgs/model/performance/actual_vs_predicted_scatter.png}
