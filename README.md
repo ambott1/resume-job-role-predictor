@@ -2,14 +2,14 @@
 
 A comprehensive machine learning system for predicting **tech industry job roles** based on candidate skills, qualifications, and experience levels using advanced feature engineering with word embeddings, semantic transformers, and XGBoost.
 
-## 🎯 Project Overview
+## Project Overview
 
 This system predicts the most suitable **tech job role** for a candidate by analyzing:
 - **Skills**: Semantic representation using Word2Vec embeddings
 - **Qualifications**: Hybrid approach combining educational hierarchy and semantic field embeddings
 - **Experience Level**: Ordinal encoding for career progression
 
-## 📊 Dataset
+## Dataset
 
 **Location**: `datasets/candidate_job_role_dataset.csv`
 
@@ -19,7 +19,7 @@ This system predicts the most suitable **tech job role** for a candidate by anal
 - 200+ unique technical skills
 - Features: candidate_id, skills, qualification, experience_level, job_role
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 ECS171ResumeAnalysis/
@@ -85,7 +85,7 @@ ECS171ResumeAnalysis/
 └── README.md                          # This file
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -119,7 +119,7 @@ ECS171ResumeAnalysis/
    - Sentence Transformer (all-MiniLM-L6-v2): ~90 MB
    - Word2Vec (word2vec-google-news-300): ~1.5 GB
 
-## 📚 Usage
+## Usage
 
 ### 1. Web Interface (Recommended)
 
@@ -132,11 +132,11 @@ python3 app.py
 Then open your browser and navigate to: **http://localhost:5000**
 
 **Features:**
-- 🎨 Modern, responsive UI built with Tailwind CSS and Alpine.js
-- 🔍 Multi-select dropdown with search for 200+ technical skills
-- 📊 Real-time predictions with confidence scores
-- 📈 Visual probability charts for top 3 matching roles
-- ⚡ Instant results with detailed analysis
+- Modern, responsive UI built with Tailwind CSS and Alpine.js
+- Multi-select dropdown with search for 200+ technical skills
+- Real-time predictions with confidence scores
+- Visual probability charts for top 3 matching roles
+- Instant results with detailed analysis
 
 **First-time use:** The initial prediction may take 5-10 minutes to download the Word2Vec model (~1.5 GB). Subsequent predictions are instant.
 
@@ -258,7 +258,7 @@ Top 3 Predictions:
 ================================================================================
 ```
 
-## 🔬 Feature Engineering Details
+## Feature Engineering Details
 
 ### Hybrid Qualification Encoding
 
@@ -284,7 +284,7 @@ Top 3 Predictions:
 - Fitted on training data only
 - Ensures consistent feature scales
 
-## 🎯 Model Architecture
+## Model Architecture
 
 **Algorithm**: XGBoost Classifier
 - Multi-class classification (20+ tech job roles)
@@ -306,7 +306,7 @@ Top 3 Predictions:
 }
 ```
 
-## 📈 Performance Metrics
+## Performance Metrics
 
 The system is evaluated using:
 - **Accuracy**: Overall correctness
@@ -367,7 +367,7 @@ All artifacts are saved in `artifacts/` directory:
 | `experience_ordinal_encoder.joblib` | Experience encoder | <1 MB |
 | `label_encoder.joblib` | Job role encoder | <1 MB |
 
-## 📊 Key Insights
+## Key Insights
 
 From data exploration:
 - **Balanced dataset**: ~40 candidates per tech job role
@@ -376,7 +376,7 @@ From data exploration:
 - **Experience**: Distributed across Entry (0-2 years), Mid (3-5 years), and Senior (6+ years) levels
 - **Tech roles**: Data Scientist, Full Stack Developer, DevOps Engineer, Frontend Developer, Backend Developer, and more
 
-## 🌐 Web Interface Details
+## Web Interface Details
 
 The Flask web application (`app.py`) provides:
 
@@ -399,7 +399,7 @@ The Flask web application (`app.py`) provides:
 - **Interactivity:** Alpine.js (CDN)
 - **Multi-select:** Choices.js (CDN)
 
-## 📄 Project Report
+## Project Report
 
 The `project_report/` directory contains:
 - **main.tex**: LaTeX source code for the project report
@@ -411,15 +411,15 @@ The `main.tex` file contains the complete LaTeX source code for the project repo
 
 The guidelines and example report provide guidance on project structure, reporting requirements, and formatting standards for the ECS171 course.
 
-## 📝 License
+## License
 
 This project is part of the ECS171 Machine Learning course at UC Davis.
 
-## 👥 Contributors
+## Contributors
 
 Team 5 - ECS171 Fall Quarter 2025
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Pre-trained models: Sentence Transformers, Google Word2Vec
 - Libraries: scikit-learn, XGBoost, gensim, pandas, Flask
