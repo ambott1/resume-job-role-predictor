@@ -197,10 +197,10 @@ TRAINING PIPELINE COMPLETED SUCCESSFULLY!
 ================================================================================
 
 Final Model Performance:
-  • Test Accuracy: 0.85+ (varies)
-  • Test F1 Score (Weighted): 0.85+
-  • Test F1 Score (Macro): 0.84+
-  • Cross-validation F1 Score: 0.83+
+  • Test Accuracy: 0.99+ (varies)
+  • Test F1 Score (Weighted): 0.99+ (varies)
+  • Test F1 Score (Macro): 0.99+ (varies)
+  • Cross-validation F1 Score: 0.99+ (varies)
 ```
 
 ### 4. Making Predictions (Command Line)
@@ -314,7 +314,7 @@ The system is evaluated using:
 - **F1 Score (Macro)**: Equal weight to all classes
 - **Classification Report**: Per-class precision, recall, and F1
 
-Expected performance: **85-90% accuracy** on test set
+Expected performance: **~99% accuracy** on test set
 
 ### Performance Visualizations
 
