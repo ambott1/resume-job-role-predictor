@@ -58,7 +58,7 @@
         <!-- Header -->
         <div class="gradient-bg text-white py-8 shadow-lg">
             <div class="container mx-auto px-4">
-                <h1 class="text-4xl font-bold text-center mb-2">🚀 Tech Job Role Prediction System</h1>
+                <h1 class="text-4xl font-bold text-center mb-2">Tech Job Role Prediction System</h1>
                 <p class="text-center text-lg opacity-90">Discover your ideal tech career path powered by AI</p>
             </div>
         </div>
@@ -218,7 +218,7 @@
                         
                         <!-- Predicted Role -->
                         <div class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-6 border border-purple-200">
-                            <p class="text-sm font-semibold text-gray-600 mb-2">🎯 Predicted Tech Role</p>
+                            <p class="text-sm font-semibold text-gray-600 mb-2">Predicted Tech Role</p>
                             <p class="text-2xl font-bold text-purple-700 mb-3" x-text="result?.predicted_role"></p>
                             <div class="flex items-center">
                                 <div class="flex-1 bg-gray-200 rounded-full h-3">
@@ -234,7 +234,7 @@
                         
                         <!-- Top 3 Predictions -->
                         <div>
-                            <p class="text-sm font-semibold text-gray-700 mb-3">📊 Top 3 Matching Roles</p>
+                            <p class="text-sm font-semibold text-gray-700 mb-3">Top 3 Matching Roles</p>
                             <div class="space-y-3">
                                 <template x-for="(pred, index) in result?.top_3_predictions" :key="index">
                                     <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
@@ -272,7 +272,7 @@
                         <!-- Info Note -->
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
                             <p class="text-xs text-blue-800">
-                                <span class="font-semibold">💡 Note:</span> These predictions are based on advanced machine learning algorithms analyzing your skills, education, and experience. The suitability score indicates how well your profile matches the predicted role.
+                                <span class="font-semibold">Note:</span> These predictions are based on advanced machine learning algorithms analyzing your skills, education, and experience. The suitability score indicates how well your profile matches the predicted role.
                             </p>
                         </div>
                     </div>
