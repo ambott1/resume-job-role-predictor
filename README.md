@@ -11,8 +11,9 @@ This system predicts the most suitable **tech job role** for a candidate by anal
 
 ## My Contribution
 
-- Developed the architecture and training pipeline for the XGBoost model. 
-- Designed the data pipeline to feed processed feature vectors into the classifier and managed the model serialization.
+- Designed and implemented the end-to-end training pipeline for the XGBoost classifier
+- Engineered the feature pipeline transforming resume text and categorical attributes into model-ready vectors
+- Handled model training, evaluation, and serialization for deployment
 
 ## Dataset
 
