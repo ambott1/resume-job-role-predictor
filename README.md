@@ -9,6 +9,11 @@ This system predicts the most suitable **tech job role** for a candidate by anal
 - **Qualifications**: Hybrid approach combining educational hierarchy and semantic field embeddings
 - **Experience Level**: Ordinal encoding for career progression
 
+## My Contribution
+
+- Developed the architecture and training pipeline for the XGBoost model. 
+- Designed the data pipeline to feed processed feature vectors into the classifier and managed the model serialization.
+
 ## Dataset
 
 **Location**: `datasets/candidate_job_role_dataset.csv`
